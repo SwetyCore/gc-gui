@@ -5,6 +5,8 @@ import vuetify from './plugins/vuetify'
 import axios from "axios"
 Vue.config.productionTip = false
 Vue.prototype.$axios=axios;
+Vue.prototype.$bus = new Vue()
+
 new Vue({
   router,
   vuetify,

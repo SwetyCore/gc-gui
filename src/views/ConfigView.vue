@@ -4,7 +4,12 @@
       <v-toolbar flat color="primary" dark>
         <v-toolbar-title>GrassCutter 配置</v-toolbar-title>
       </v-toolbar>
+
       <v-tabs vertical>
+        <v-tab>
+          <v-icon left> mdi-cog</v-icon>
+          环境设定
+        </v-tab>
         <v-tab>
           <v-icon left> mdi-code-json</v-icon>
           config.json
@@ -17,7 +22,38 @@
           <v-icon left> mdi-code-json </v-icon>
           Other
         </v-tab>
+        <v-tab-item>
+          <v-card flat>
+            <v-list-item>
+              <v-list-item-content>
+                <v-text-field
+                  label="GC 运行目录"
+                  outlined
+                  dense
+                  v-model="gcCFG.tmpPath"
+                  :readonly="true"
+                ></v-text-field>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-text-field
+                  label="GC 核心"
+                  outlined
+                  dense
+                  :readonly="true"
+                  v-model="gcCFG.gcFileName"
+                ></v-text-field>
+              </v-list-item-content>
+            </v-list-item>
 
+            <v-card-actions>
+              <v-btn text dark color="primary" @click="setEnv">
+                更改环境信息
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-tab-item>
         <v-tab-item>
           <v-card flat>
             <v-expansion-panels flat>
@@ -108,7 +144,26 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      gcCFG: {},
+    };
+  },
+  mounted() {
+    this.getGcCFG();
+  },
+  methods: {
+    getGcCFG() {
+      this.$axios.get("/loadEnv").then((res) => {
+        this.gcCFG = res.data.data;
+      });
+    },
+    setEnv() {
+      this.$bus.$emit("setEnv");
+    },
+  },
+};
 </script>
 
 <style></style>

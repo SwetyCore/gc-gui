@@ -14,7 +14,7 @@ export default {
   props: {
     socketURI: {
       type: String,
-      default: 'ws://ubuntu.local:4021'
+      default: 'ws://127.0.0.1:4001'
     },
   },
   mounted() {
